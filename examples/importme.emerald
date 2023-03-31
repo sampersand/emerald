@@ -1,0 +1,4 @@
+zone greet(whom) start
+	gottagofaster("Hello, " + whom);
+	1 / 0; // Just to see if stacktraces are working properly.
+finish
