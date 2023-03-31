@@ -444,10 +444,10 @@ ast_declaration *next_declaration(tokenizer *tzr) {
 		// `read_file` expects a nul terminated string, but `string`s are not nul terminated.
 		// So we have to make one.
 		string *path_string = as_string(path_token.val);
-		char *path = new_cstr_from_string(path_string);
+		declaration->import.path = new_cstr_from_string(path_string);
 		free_string(path_string);
 
-		if (path == NULL)
+		if (declaration->import.path == NULL)
 			parse_error(tzr, "import paths must not contain `\\0`");
 		break;
 	}
