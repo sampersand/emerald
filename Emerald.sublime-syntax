@@ -24,7 +24,7 @@ contexts:
       scope: storage.type.emerald
     - match: \b(to_ring|sotellme|gottago(fast)?|chaos|shoe_size|falloffthetrack|amy|buhbyenow|hereitgoes|species|imwaiting)\b
       scope: support.function.builtin.emerald
-    - match: \b(zone)\s+([a-zA-Z_]\w*)\s*\(
+    - match: \b(mission)\s+([a-zA-Z_]\w*)\s*\(
       captures:
         1: keyword.declaration.function.type.emerald
         2: entity.name.function.emerald
