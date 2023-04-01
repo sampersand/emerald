@@ -1,0 +1,64 @@
+%YAML 1.2
+---
+name: Emerald
+file_extensions: [em,emerald,eme]
+scope: source.emerald
+
+variables:
+  ident: (?:(\b|\$)[a-zA-Z_][\w_]*\b)
+
+contexts:
+  prototype:
+    - include: comment
+
+  comment:
+    - match: //.*\n
+      scope: comment.line.emerald
+
+  main:
+    - match: \b(good|evil|chaos_emerald)\b
+      scope: constant.language.value.emerald
+    - match: \b(hmmm|ormaybe|loopdeloop|jump|carryon|nopeseeya|friend|eachring|start|finish)\b
+      scope: keyword.emerald
+    - match: \b(dr_eggman|hedgehog)\b
+      scope: storage.type.emerald
+    - match: \b(to_ring|sotellme|gottago(fast)?|chaos|shoe_size|falloffthetrack|amy|buhbyenow|hereitgoes|species|imwaiting)\b
+      scope: support.function.builtin.emerald
+    - match: \b(zone)\s+([a-zA-Z_]\w*)\s*\(
+      captures:
+        1: keyword.declaration.function.type.emerald
+        2: entity.name.function.emerald
+      push:
+        - match: \)
+          pop: true
+        - match: '{{ident}}'
+          scope: variable.parameter.emerald  
+
+    - match: \b\d+\b
+      scope: constant.numeric.value.emerald
+    - match: "'"
+      push: 
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.single.emerald
+        - match: \\.
+          scope: constant.character.escape.emerald
+        - match: "'"
+          pop: true
+    - match: '"'
+      push: 
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.double.emerald
+        - match: \\.
+          scope: constant.character.escape.emerald
+        - match: '"'
+          pop: true
+
+    - match: '[-+*/%<>=!]=?|&&|\|\|'
+      scope: keyword.operator.emerald
+#   # keyword:
+#   #   - match: b(<<|>>|&|\^|\|)|\*\*|[+*/%]|[<>!=]?=|\&\&|\|\||<>|<([-+*/%&|^<>?]|\*\*)?-|-([-+*/%&|^<>?]|\*\*)?>|-|<|>
+#   #     scope: keyword.operator.emerald
+#   #   - match: \$[a-zA-Z_]\w*\b
+#   #     scope: support.function.builtin.emerald
+#   #   - match: \b(for|if|rm|om|disp|skip|func|class|abort|input|whilst|return|escape)\b
+#   #     scope: keyword.language.emerald
