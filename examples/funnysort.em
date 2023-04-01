@@ -1,9 +1,9 @@
-zone iCantBelieveItCanSort(ary) start
+zone iCantBelieveItCanSort(ary)
 	hedgehog i = 0
-	loopdeloop i < shoe_size(ary) start
+	loopdeloop i < shoe_size(ary)
 		hedgehog j = 0
-		loopdeloop j < shoe_size(ary) start
-			hmmm ary[i] < ary[j] start
+		loopdeloop j < shoe_size(ary)
+			hmmm ary[i] < ary[j]
 				hedgehog temp = ary[i]
 				ary[i] = ary[j]
 				ary[j] = temp
@@ -15,7 +15,7 @@ zone iCantBelieveItCanSort(ary) start
 	nopeseeya ary
 finish
 
-zone main() start
+zone main()
 	hedgehog ary = [7,6,5,8,1,4,2,3,9]
 	gottagofast(iCantBelieveItCanSort(ary))
 finish

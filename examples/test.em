@@ -45,11 +45,15 @@ zone test_numbers() start
 	x *= 4 assert(x == 52, "*= failed")
 	x /= 5 assert(x == 10, "/= failed")
 	x %= 3 assert(x ==  1, "%= failed")
+
+	// species test
+	assert(species(17) == "number", "species failed")
 finish
 
 zone test_strings() start
 	gottagofast("testing strings...")
 
+	assert(species("foo") == "string", "species failed")
 	assert("foobar" == "foo" + "bar", "+ failed")
 	assert("foo7" == "foo" + 7, "lhs + failed")
 	assert("7foo" == 7 + "foo", "rhs + failed")
@@ -62,6 +66,9 @@ finish
 zone test_constants() start
 	gottagofast("testing constants...")
 
+	assert(species(good) == "boolean", "good species is not boolean")
+	assert(species(evil) == "boolean", "evil species is not boolean")
+	assert(species(chaos_emerald) == "null", "chaos_emerald species is not null")
 	assert("foogood" == "foo" + good, "good doesnt convert")
 	assert("fooevil" == "foo" + evil, "evil doesnt convert")
 	assert("foochaos_emerald" == "foo" + chaos_emerald, "chaos_emerald doesnt convert")
@@ -75,7 +82,9 @@ zone test_constants() start
 finish
 
 zone test_arrays() start
+	gottagofast("testing arrays...")
 	hedgehog ary = ["A", "B", "C"]
+	assert(species(ary) == "array", "species failed")
 	assert(ary == ["A", "B", "C"], "== failed")
 	assert(ary[0] == "A", "ary[0] failed")
 	assert(ary[1] == "B", "ary[1] failed")
@@ -97,11 +106,23 @@ zone test_arrays() start
 	finish
 finish
 
+zone test_conditions()
+	gottagofast("testing conditions...")
+	assert(good || good, "good || good failed")
+	assert(!(evil || evil), "evil || evil failed")
+	assert(evil || good, "evil || good failed")
+	assert(good && good, "good && good failed")
+	assert(!(evil && good), "evil && good failed")
+	assert(!(evil && evil), "evil && evil failed")
+finish
+
 zone main() start
 	test_global()
 	test_numbers()
 	test_strings()
 	test_constants()
+	test_arrays()
+	test_conditions()
 //	assert(foo == chaos_emerald, "foo isnt chaos_emerald")
 //	set_foo(4)
 //	assert(foo == 4, "foo isnt 4")
