@@ -1,5 +1,7 @@
 ifdef DEBUG
 CFLAGS+=-g -fsanitize=address,undefined
+else
+CFLAGS+=-O2 -flto -DNDEBUG
 endif
 CFLAGS += -Wall -Wpedantic -Wextra
 CFLAGS += -I.

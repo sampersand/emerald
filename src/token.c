@@ -81,6 +81,7 @@ static token parse_identifier(tokenizer *tzr) {
 	if (!strncmp(start, "hmmm", 4)) return (token) { .kind = TOKEN_KIND_IF };
 	if (!strncmp(start, "ormaybe", 7)) return (token) { .kind = TOKEN_KIND_ELSE };
 	if (!strncmp(start, "imwaiting", 9)) return (token) { .kind = TOKEN_KIND_WHILE };
+	if (!strncmp(start, "eachring", 8)) return (token) { .kind = TOKEN_KIND_FOR };
 	if (!strncmp(start, "jump", 4)) return (token) { .kind = TOKEN_KIND_BREAK };
 	if (!strncmp(start, "carryon", 7)) return (token) { .kind = TOKEN_KIND_CONTINUE };
 	if (!strncmp(start, "nopeseeya", 9)) return (token) { .kind = TOKEN_KIND_RETURN };
@@ -267,6 +268,7 @@ void dump_token(FILE *out, token tkn) {
 	case TOKEN_KIND_IF: fputs("Keyword(hmmm)", out); break;
 	case TOKEN_KIND_ELSE: fputs("Keyword(ormaybe)", out); break;
 	case TOKEN_KIND_WHILE: fputs("Keyword(imwaiting)", out); break;
+	case TOKEN_KIND_FOR: fputs("Keyword(for)", out); break;
 	case TOKEN_KIND_BREAK: fputs("Keyword(jump)", out); break;
 	case TOKEN_KIND_CONTINUE: fputs("Keyword(carryon)", out); break;
 	case TOKEN_KIND_RETURN: fputs("Keyword(nopeseeya)", out); break;

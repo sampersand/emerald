@@ -7,6 +7,9 @@
 #define parse_error(tzr, ...) ( \
 	fprintf(stderr, "parse error at line %d: ", tzr->line_number), \
 	fprintf(stderr, __VA_ARGS__), \
+	fputs(" (offending token: ", stderr), \
+	dump_token(stderr, peek(tzr)), \
+	fputs(" )", stderr), \
 	exit(1))
 
 static token peek(tokenizer *tzr) {
@@ -161,12 +164,12 @@ static ast_primary *parse_primary(tokenizer *tzr) {
 				primary->function_call.arguments[primary->function_call.number_of_arguments] =
 					parse_expression(tzr);
 				if (primary->function_call.arguments[primary->function_call.number_of_arguments] == NULL)
-					parse_error(tzr, "expected an expression for argument calls");
+					parse_error(tzr, "expected an expression for zone calls");
 				primary->function_call.number_of_arguments++;
 
 				if (!guard(tzr, TOKEN_KIND_COMMA)) {
 					if (!guard(tzr, TOKEN_KIND_RPAREN))
-						parse_error(tzr, "expected either an `,` or `)` after function call argument");
+						parse_error(tzr, "expected either an `,` or `)` after zone call argument");
 					break;
 				}
 			}
@@ -299,12 +302,12 @@ static ast_statement *parse_statement(tokenizer *tzr) {
 	switch (tkn.kind) {
 	case TOKEN_KIND_LOCAL:
 		statement->kind = AST_STATEMENT_LOCAL;
-		statement->local.name = expect_identifier(tzr, "local name");
+		statement->local.name = expect_identifier(tzr, "hedgehog name");
 
 		if (guard(tzr, TOKEN_KIND_ASSIGN)) {
 			statement->local.initializer = parse_expression(tzr);
 			if (statement->local.initializer == NULL)
-				parse_error(tzr, "expected expression after `=` in local declaration");
+				parse_error(tzr, "expected expression after `=` in hedgehog declaration");
 		} else {
 			statement->local.initializer = NULL;
 		}
@@ -337,27 +340,52 @@ static ast_statement *parse_statement(tokenizer *tzr) {
 		statement->kind = AST_STATEMENT_WHILE;
 		statement->while_.condition = parse_expression(tzr);
 		if (statement->while_.condition == NULL)
-			parse_error(tzr, "expected condition for `while`");
+			parse_error(tzr, "expected condition for `imwaiting`");
 
 		statement->while_.body = parse_block(tzr);
 		if (statement->while_.body == NULL)
-			parse_error(tzr, "expected body for `while`");
+			parse_error(tzr, "expected body for `imwaiting`");
+		break;
+
+	case TOKEN_KIND_FOR:
+		statement->kind = AST_STATEMENT_FOR;
+		statement->for_.initializer = parse_statement(tzr);
+		if (statement->for_.initializer == NULL)
+			parse_error(tzr, "expected initializer for `eachring`");
+
+		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+			parse_error(tzr, "expected `;` after `initializer`");
+
+		statement->for_.condition = parse_expression(tzr);
+		if (statement->for_.condition == NULL)
+			parse_error(tzr, "expected condition for `eachring`");
+
+		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+			parse_error(tzr, "expected `;` after `condition`");
+
+		statement->for_.updator = parse_expression(tzr);
+		if (statement->for_.updator == NULL)
+			parse_error(tzr, "expected updator clause for `eachring`");
+
+		statement->for_.body = parse_block(tzr);
+		if (statement->for_.body == NULL)
+			parse_error(tzr, "expected body for `eachring`");
 		break;
 
 	case TOKEN_KIND_IF:
 		statement->kind = AST_STATEMENT_IF;
 		statement->if_.condition = parse_expression(tzr);
 		if (statement->if_.condition == NULL)
-			parse_error(tzr, "expected condition for `if`");
+			parse_error(tzr, "expected condition for `hmmm`");
 
 		statement->if_.if_true = parse_block(tzr);
 		if (statement->if_.if_true == NULL)
-			parse_error(tzr, "expected body for `if`");
+			parse_error(tzr, "expected body for `hmmm`");
 
 		if (guard(tzr, TOKEN_KIND_ELSE)) {
 			statement->if_.if_false = parse_block(tzr);
 			if (statement->if_.if_false == NULL)
-				parse_error(tzr, "expected body for `else`");
+				parse_error(tzr, "expected body for `ormaybe`");
 		} else {
 			statement->if_.if_false = NULL;
 		}
@@ -399,7 +427,7 @@ static ast_block *parse_block(tokenizer *tzr) {
 		ast_statement *statement = parse_statement(tzr);
 		if (statement == NULL) {
 			if (!guard(tzr, TOKEN_KIND_RBRACKET))
-				parse_error(tzr, "expected `}` at end of block body");
+				parse_error(tzr, "expected `finish` at end of block body");
 			break;
 		}
 
@@ -425,7 +453,7 @@ ast_declaration *next_declaration(tokenizer *tzr) {
 	switch (tkn.kind) {
 	case TOKEN_KIND_GLOBAL:
 		declaration->kind = AST_DECLARATION_GLOBAL;
-		declaration->global.name = expect_identifier(tzr, "global name");
+		declaration->global.name = expect_identifier(tzr, "dr_eggman name");
 
 		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
 		// 	parse_error(tzr, "expected `;` after `global` declaration");
@@ -436,7 +464,7 @@ ast_declaration *next_declaration(tokenizer *tzr) {
 
 		token path_token = advance(tzr);
 		if (path_token.kind != TOKEN_KIND_LITERAL || !is_string(path_token.val))
-			parse_error(tzr, "`import` only takes strings");
+			parse_error(tzr, "`friend` only takes strings");
 		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
 		// 	parse_error(tzr, "expected `;` after `import` declaration");
 
@@ -448,16 +476,16 @@ ast_declaration *next_declaration(tokenizer *tzr) {
 		free_string(path_string);
 
 		if (declaration->import.path == NULL)
-			parse_error(tzr, "import paths must not contain `\\0`");
+			parse_error(tzr, "friend paths must not contain `\\0`");
 		break;
 	}
 
 	case TOKEN_KIND_FUNCTION:
 		declaration->kind = AST_DECLARATION_FUNCTION;
-		declaration->function.name = expect_identifier(tzr, "function name");
+		declaration->function.name = expect_identifier(tzr, "zone name");
 
 		if (!guard(tzr, TOKEN_KIND_LPAREN))
-			parse_error(tzr, "expected `(` after function name");
+			parse_error(tzr, "expected `(` after zone name");
 
 		unsigned capacity = 4;
 		declaration->function.number_of_arguments = 0;
@@ -471,7 +499,7 @@ ast_declaration *next_declaration(tokenizer *tzr) {
 			}
 
 			declaration->function.argument_names[declaration->function.number_of_arguments] =
-				expect_identifier(tzr, "function argument");
+				expect_identifier(tzr, "zone argument");
 			declaration->function.number_of_arguments++;
 
 			if (!guard(tzr, TOKEN_KIND_COMMA)) {
@@ -483,7 +511,7 @@ ast_declaration *next_declaration(tokenizer *tzr) {
 
 		declaration->function.body = parse_block(tzr);
 		if (declaration->function.body == NULL)
-			parse_error(tzr, "expected body for function %s", declaration->function.name);
+			parse_error(tzr, "expected body for zone %s", declaration->function.name);
 
 		break;
 
@@ -647,6 +675,16 @@ void dump_ast_statement(FILE *out, const ast_statement *statement, unsigned inde
 		dump_ast_expression(out, statement->while_.condition);
 		fputc(' ', out);
 		dump_ast_block(out, statement->while_.body, indent + 1);
+		break;
+
+	case AST_STATEMENT_FOR:
+		fputs("for ", out);
+		dump_ast_statement(out, statement->for_.initializer, indent);
+		dump_ast_expression(out, statement->for_.condition);
+		fputs("; ", out);
+		dump_ast_expression(out, statement->for_.updator);
+		fputc(' ', out);
+		dump_ast_block(out, statement->for_.body, indent + 1);
 		break;
 
 	case AST_STATEMENT_BREAK:

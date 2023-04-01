@@ -126,6 +126,7 @@ struct ast_statement {
 		AST_STATEMENT_RETURN,
 		AST_STATEMENT_IF,
 		AST_STATEMENT_WHILE,
+		AST_STATEMENT_FOR,
 		AST_STATEMENT_BREAK,
 		AST_STATEMENT_CONTINUE,
 		AST_STATEMENT_EXPRESSION
@@ -145,6 +146,12 @@ struct ast_statement {
 			ast_expression *condition;
 			ast_block *if_true, *if_false; // `if_false` is `NULL` if there wasn't an `else`.
 		} if_;
+
+		struct {
+			ast_statement *initializer;
+			ast_expression *condition, *updator;
+			ast_block *body;
+		} for_;
 
 		struct {
 			ast_expression *condition;

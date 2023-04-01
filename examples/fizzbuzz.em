@@ -1,28 +1,3 @@
-zone fizzbuzz1(max) start
-	hedgehog i = 0
-
-	imwaiting i < max start
-		i += 1
-
-		hmmm (i % 15) == 0 start
-            gottagofast("FizzBuzz")
-            carryon
-        finish
-
-		hmmm (i % 3) == 0 start
-            gottagofast("Fizz")
-            carryon
-        finish
-
-		hmmm (i % 5) == 0 start
-            gottagofast("Buzz")
-            carryon
-        finish
-
-
-		gottagofast(i)
-	finish
-finish
 
 zone fizzbuzz2(max) start
 	hedgehog ary = [chaos_emerald]
@@ -42,7 +17,29 @@ zone fizzbuzz2(max) start
 	finish
 finish
 
+zone fizzbuzz1(max) start
+	eachring hedgehog i = 0 ; i < max; i += 1 start
+		hmmm (i % 15) == 0 start
+			gottagofast("FizzBuzz")
+			carryon
+		finish
+
+		hmmm (i % 3) == 0 start
+			gottagofast("Fizz")
+			carryon
+		finish
+
+		hmmm (i % 5) == 0 start
+			gottagofast("Buzz")
+			carryon
+		finish
+
+
+		gottagofast(i)
+	finish
+finish
+
 zone main() start
 	fizzbuzz1(100)
-	fizzbuzz2(16)
+	//fizzbuzz2(16)
 finish

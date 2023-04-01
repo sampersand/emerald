@@ -1,4 +1,4 @@
-friend "examples/importme.emerald"
+friend "examples/importme.em"
 
 zone main() start
 	greet("world")

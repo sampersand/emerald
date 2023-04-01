@@ -4,6 +4,7 @@
 #include "shared.h"
 #include "function.h"
 #include "value.h"
+#include "ast.h"
 #include "globals.h"
 #include <stdlib.h>
 #include <string.h>
@@ -492,7 +493,41 @@ static void compile_statement(codeblock_builder *builder, ast_statement *stateme
 
 		break;
 	}
+///
+		case AST_STATEMENT_FOR: {
+		compile_statement(builder, statement->for_.initializer);
+		set_opcode(builder, OPCODE_JUMP);
+		unsigned jump_to_condition = defer_jump(builder);
 
+		unsigned beginning_of_condition = builder->bytecode.length;
+		compile_expression(builder, statement->for_.updator, SCRATCH_LOCAL);
+		set_jump_dst(builder, jump_to_condition);
+
+		compile_expression(builder, statement->for_.condition, SCRATCH_LOCAL);
+		set_opcode(builder, OPCODE_JUMP_IF_FALSE);
+		set_local(builder, SCRATCH_LOCAL);
+		unsigned jump_to_for_end = defer_jump(builder);
+
+		if (builder->whiles.length == MAX_NUMBER_OF_NESTED_WHILES)
+			parse_error("too many nested fors encountered; only %d max allowed", MAX_NUMBER_OF_NESTED_WHILES);
+
+		builder->whiles.start_of_conditions[builder->whiles.length] = beginning_of_condition;
+		builder->whiles.breaks[builder->whiles.length].length = 0;
+		builder->whiles.length++;
+		compile_block(builder, statement->for_.body);
+
+		set_opcode(builder, OPCODE_JUMP);
+		set_count(builder, beginning_of_condition);
+		set_jump_dst(builder, jump_to_for_end);
+
+		builder->whiles.length--;
+		for (unsigned i = 0; i < builder->whiles.breaks[builder->whiles.length].length; i++)
+			set_jump_dst(builder, builder->whiles.breaks[builder->whiles.length].code_positions[i]);
+
+		break;
+	}
+
+///
 	case AST_STATEMENT_BREAK:
 		if (builder->whiles.length == 0)
 			parse_error("cannot break when not within a while");
