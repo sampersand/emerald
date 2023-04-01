@@ -1,4 +1,4 @@
-zone assert(cond, msg) start
+mission assert(cond, msg) start
 	hmmm !cond start
 		gottagofast(msg)
 		falloffthetrack(1)
@@ -6,14 +6,14 @@ zone assert(cond, msg) start
 finish
 
 dr_eggman test_global_var
-zone test_global() start
+mission test_global() start
 	gottagofast("testing dr_eggman variables...")
 	assert(test_global_var == chaos_emerald, "dr_eggman isnt initially chaos_emerald")
 	test_global_var = 34
 	assert(test_global_var == 34, "dr_eggman isnt set properly")
 finish
 
-zone test_numbers() start
+mission test_numbers() start
 	gottagofast("testing numbers...")
 
 	// normal math
@@ -63,7 +63,7 @@ zone test_strings() start
 	assert("foofoofoo" == "foo" * 3, "* failed")
 finish
 
-zone test_constants() start
+mission test_constants() start
 	gottagofast("testing constants...")
 
 	assert(species(good) == "boolean", "good species is not boolean")
@@ -81,7 +81,7 @@ zone test_constants() start
 	assert(chaos_emerald != good, "chaos_emerald != good failed")
 finish
 
-zone test_arrays() start
+mission test_arrays() start
 	gottagofast("testing arrays...")
 	hedgehog ary = ["A", "B", "C"]
 	assert(species(ary) == "array", "species failed")
@@ -106,7 +106,7 @@ zone test_arrays() start
 	finish
 finish
 
-zone test_conditions()
+mission test_conditions()
 	gottagofast("testing conditions...")
 	assert(good || good, "good || good failed")
 	assert(!(evil || evil), "evil || evil failed")
@@ -116,7 +116,7 @@ zone test_conditions()
 	assert(!(evil && evil), "evil && evil failed")
 finish
 
-zone main() start
+mission main() start
 	test_global()
 	test_numbers()
 	test_strings()
