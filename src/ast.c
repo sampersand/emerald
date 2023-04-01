@@ -340,11 +340,11 @@ static ast_statement *parse_statement(tokenizer *tzr) {
 		statement->kind = AST_STATEMENT_WHILE;
 		statement->while_.condition = parse_expression(tzr);
 		if (statement->while_.condition == NULL)
-			parse_error(tzr, "expected condition for `imwaiting`");
+			parse_error(tzr, "expected condition for `loopdeloop`");
 
 		statement->while_.body = parse_block(tzr);
 		if (statement->while_.body == NULL)
-			parse_error(tzr, "expected body for `imwaiting`");
+			parse_error(tzr, "expected body for `loopdeloop`");
 		break;
 
 	case TOKEN_KIND_FOR:
@@ -410,8 +410,9 @@ static ast_statement *parse_statement(tokenizer *tzr) {
 }
 
 static ast_block *parse_block(tokenizer *tzr) {
-	if (!guard(tzr, TOKEN_KIND_LBRACE))
-		return NULL;
+	guard(tzr, TOKEN_KIND_LBRACE); // Eat it if it's present, but it's optional.
+	// if (!guard(tzr, TOKEN_KIND_LBRACE))
+	// 	return NULL;
 
 	ast_block *block = xmalloc(sizeof(ast_block));
 

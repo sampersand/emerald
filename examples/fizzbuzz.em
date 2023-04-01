@@ -1,35 +1,35 @@
 
-zone fizzbuzz2(max) start
+zone fizzbuzz2(max)
 	hedgehog ary = [chaos_emerald]
 
-	imwaiting shoe_size(ary) <= max start
+	loopdeloop shoe_size(ary) <= max
 		hedgehog i = shoe_size(ary)
 		ary[i] = ""
 
-		hmmm (i % 3) == 0 start ary[i] += "Fizz" finish
-		hmmm (i % 5) == 0 start ary[i] += "Buzz" finish
-		hmmm shoe_size(ary[i]) == 0 start ary[i] = i finish
+		hmmm (i % 3) == 0 ary[i] += "Fizz" finish
+		hmmm (i % 5) == 0 ary[i] += "Buzz" finish
+		hmmm shoe_size(ary[i]) == 0 ary[i] = i finish
 	finish
 
 	hedgehog i = 0
-	imwaiting (i += 1) <= max start
+	loopdeloop (i += 1) <= max
 		gottagofast(ary[i])
 	finish
 finish
 
-zone fizzbuzz1(max) start
-	eachring hedgehog i = 0 ; i < max; i += 1 start
-		hmmm (i % 15) == 0 start
+zone fizzbuzz1(max)
+	eachring hedgehog i = 0 ; i < max; i += 1
+		hmmm (i % 15) == 0
 			gottagofast("FizzBuzz")
 			carryon
 		finish
 
-		hmmm (i % 3) == 0 start
+		hmmm (i % 3) == 0
 			gottagofast("Fizz")
 			carryon
 		finish
 
-		hmmm (i % 5) == 0 start
+		hmmm (i % 5) == 0
 			gottagofast("Buzz")
 			carryon
 		finish
@@ -39,7 +39,7 @@ zone fizzbuzz1(max) start
 	finish
 finish
 
-zone main() start
+zone main()
 	fizzbuzz1(100)
 	//fizzbuzz2(16)
 finish

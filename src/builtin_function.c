@@ -1,6 +1,7 @@
 #include "builtin_function.h"
 #include "value.h"
 #include <time.h>
+#include <unistd.h>
 
 void init_builtin_functions(void) {
 	// the `srandom` function provides much better random numbers, but isn't technically standard.
@@ -158,6 +159,13 @@ static value builtin_typeof_fn(const value *arguments) {
 	return new_string_value(new_string(strdup(typename), strlen(typename)));
 }
 
+static value builtin_sleep_fn(const value *arguments) {
+	if (!is_number(arguments[0]))
+		die_with_stacktrace("can only sleep for number seconds");
+
+	return new_number_value(sleep(as_number(arguments[0])));
+}
+
 builtin_function builtin_functions[] = {
 	{
 		.name = "to_ring",
@@ -213,6 +221,11 @@ builtin_function builtin_functions[] = {
 		.name = "species",
 		.required_argument_count = 1,
 		.function_pointer = builtin_typeof_fn
+	},
+	{
+		.name = "imwaiting",
+		.required_argument_count = 1,
+		.function_pointer = builtin_sleep_fn
 	},
 };
 

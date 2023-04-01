@@ -1,8 +1,8 @@
 zone iCantBelieveItCanSort(ary) start
 	hedgehog i = 0
-	imwaiting i < shoe_size(ary) start
+	loopdeloop i < shoe_size(ary) start
 		hedgehog j = 0
-		imwaiting j < shoe_size(ary) start
+		loopdeloop j < shoe_size(ary) start
 			hmmm ary[i] < ary[j] start
 				hedgehog temp = ary[i]
 				ary[i] = ary[j]
