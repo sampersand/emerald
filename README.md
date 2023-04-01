@@ -43,4 +43,4 @@ finish
 | `dump`      | `amy` |
 | `delete`    | `buhbyenow` |
 | `insert`    | `hereitgoes` |
-| `typeof`    | `hedgehogtype` |
+| `typeof`    | `species` |
