@@ -76,7 +76,7 @@ static token parse_identifier(tokenizer *tzr) {
 	if (!strncmp(start, "chaos_emerald", 13)) return (token) { .kind = TOKEN_KIND_LITERAL, .val = VALUE_NULL };
 	if (!strncmp(start, "friend", 6)) return (token) { .kind = TOKEN_KIND_IMPORT };
 	if (!strncmp(start, "dr_eggman", 9)) return (token) { .kind = TOKEN_KIND_GLOBAL };
-	if (!strncmp(start, "zone", 4)) return (token) { .kind = TOKEN_KIND_FUNCTION };
+	if (!strncmp(start, "mission", 7)) return (token) { .kind = TOKEN_KIND_FUNCTION };
 	if (!strncmp(start, "hedgehog", 8)) return (token) { .kind = TOKEN_KIND_LOCAL };
 	if (!strncmp(start, "hmmm", 4)) return (token) { .kind = TOKEN_KIND_IF };
 	if (!strncmp(start, "ormaybe", 7)) return (token) { .kind = TOKEN_KIND_ELSE };
