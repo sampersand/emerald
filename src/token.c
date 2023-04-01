@@ -263,7 +263,7 @@ void dump_token(FILE *out, token tkn) {
 
 	case TOKEN_KIND_IMPORT: fputs("Keyword(friend)", out); break;
 	case TOKEN_KIND_GLOBAL: fputs("Keyword(dr_eggman)", out); break;
-	case TOKEN_KIND_FUNCTION: fputs("Keyword(zone)", out); break;
+	case TOKEN_KIND_FUNCTION: fputs("Keyword(mission)", out); break;
 	case TOKEN_KIND_LOCAL: fputs("Keyword(hedgehog)", out); break;
 	case TOKEN_KIND_IF: fputs("Keyword(hmmm)", out); break;
 	case TOKEN_KIND_ELSE: fputs("Keyword(ormaybe)", out); break;
