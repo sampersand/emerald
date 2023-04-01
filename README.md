@@ -2,7 +2,7 @@
 
 The official language used by Sonic the Hedgehog.
 
-[Sonic](https://tenor.com/view/sonic-gif-25687409)
+![Sonic](https://media.tenor.com/T68KWT2qwSoAAAAd/sonic.gif)
 
 ## Hello World
 
