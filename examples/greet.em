@@ -1,5 +1,5 @@
 friend "examples/importme.em"
 
-zone main() start
+mission main() start
 	greet("world")
 finish

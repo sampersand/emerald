@@ -1,4 +1,4 @@
-zone abundant(n)
+mission abundant(n)
 	hedgehog sum = 0
 	eachring hedgehog i = 1; i <= n; i += 1
 		hmmm 0 == n % i sum += i finish
@@ -7,7 +7,7 @@ zone abundant(n)
 	nopeseeya evil
 finish
 
-zone main()
+mission main()
 	eachring hedgehog i = 0; i <= 200; i += 1
 		hmmm abundant(i) gottagofast(i) finish
 	finish

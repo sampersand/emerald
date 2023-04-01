@@ -1,4 +1,4 @@
-zone fibonacci(n)
+mission fibonacci(n)
     hmmm n <= 1
         nopeseeya n
     finish
@@ -6,6 +6,6 @@ zone fibonacci(n)
     nopeseeya fibonacci(n - 1) + fibonacci(n - 2)
 finish
 
-zone main()
+mission main()
     gottagofast(fibonacci(37))
 finish

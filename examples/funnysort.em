@@ -1,4 +1,4 @@
-zone funny_sort(ary)
+mission funny_sort(ary)
 	eachring hedgehog i = 0; i < shoe_size(ary); i += 1
 		eachring hedgehog j = 0; j < shoe_size(ary); j += 1
 			hmmm ary[i] < ary[j]
@@ -11,7 +11,7 @@ zone funny_sort(ary)
 	nopeseeya ary
 finish
 
-zone main()
+mission main()
 	hedgehog ary = [7,6,5,8,1,4,2,3,9]
 	gottagofast(funny_sort(ary))
 finish

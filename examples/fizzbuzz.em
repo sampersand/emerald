@@ -1,5 +1,5 @@
 
-zone fizzbuzz2(max)
+mission fizzbuzz2(max)
 	hedgehog ary = [chaos_emerald]
 
 	loopdeloop shoe_size(ary) <= max
@@ -17,7 +17,7 @@ zone fizzbuzz2(max)
 	finish
 finish
 
-zone fizzbuzz1(max)
+mission fizzbuzz1(max)
 	eachring hedgehog i = 0 ; i < max; i += 1
 		hmmm (i % 15) == 0
 			gottagofast("FizzBuzz")
