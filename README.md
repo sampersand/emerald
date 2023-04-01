@@ -1,8 +1,19 @@
 # The emerald progamming language
 
-The official language used by sonic the hedgehog
+The official language used by Sonic the Hedgehog.
 
-See the `examples` folder for examples!
+[Sonic](https://tenor.com/view/sonic-gif-25687409)
+
+## Hello World
+
+```
+zone main() start
+	hedgehog place = "world"
+	gottagofast("Hello, " + place)
+finish
+```
+
+ See the `examples` folder for more examples!
 
 ## Translations from "Normal" languages:
 | Normal | The Official Emerald Programming Langauge |
