@@ -7,7 +7,7 @@ The official language used by Sonic the Hedgehog.
 ## Hello World
 
 ```
-zone main() start
+mission main() start
 	hedgehog place = "world"
 	gottagofast("Hello, " + place)
 finish
@@ -23,7 +23,7 @@ finish
 | `null`      | `chaos_emerald` |
 | `import`    | `friend` |
 | `global`    | `dr_eggman` |
-| `function`  | `zone` |
+| `function`  | `mission` |
 | `local`     | `hedgehog` |
 | `if`        | `hmmm` |
 | `else`      | `ormaybe` |
