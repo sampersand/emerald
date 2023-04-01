@@ -1,5 +1,5 @@
-friend "examples/importme.emerald";
+friend "examples/importme.emerald"
 
 zone main() start
-	greet("world");
+	greet("world")
 finish

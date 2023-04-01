@@ -309,28 +309,28 @@ static ast_statement *parse_statement(tokenizer *tzr) {
 			statement->local.initializer = NULL;
 		}
 
-		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
-			parse_error(tzr, "expected `;` after `local`");
+		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+		// 	parse_error(tzr, "expected `;` after `local`");
 		break;
 
 	case TOKEN_KIND_RETURN:
 		statement->kind = AST_STATEMENT_RETURN;
 		statement->return_.expression = parse_expression(tzr); // note this can be null.
 
-		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
-			parse_error(tzr, "expected `;` after `return`");
+		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+		// 	parse_error(tzr, "expected `;` after `return`");
 		break;
 
 	case TOKEN_KIND_CONTINUE:
 		statement->kind = AST_STATEMENT_CONTINUE;
-		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
-			parse_error(tzr, "expected `;` after `continue`");
+		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+		// 	parse_error(tzr, "expected `;` after `continue`");
 		break;
 
 	case TOKEN_KIND_BREAK:
 		statement->kind = AST_STATEMENT_BREAK;
-		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
-			parse_error(tzr, "expected `;` after `break`");
+		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+		// 	parse_error(tzr, "expected `;` after `break`");
 		break;
 
 	case TOKEN_KIND_WHILE:
@@ -373,8 +373,8 @@ static ast_statement *parse_statement(tokenizer *tzr) {
 			return NULL;
 		}
 
-		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
-			parse_error(tzr, "expected `;` after expression");
+		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+		// 	parse_error(tzr, "expected `;` after expression");
 		break;
 	}
 
@@ -427,8 +427,8 @@ ast_declaration *next_declaration(tokenizer *tzr) {
 		declaration->kind = AST_DECLARATION_GLOBAL;
 		declaration->global.name = expect_identifier(tzr, "global name");
 
-		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
-			parse_error(tzr, "expected `;` after `global` declaration");
+		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+		// 	parse_error(tzr, "expected `;` after `global` declaration");
 		break;
 
 	case TOKEN_KIND_IMPORT: {
@@ -437,8 +437,8 @@ ast_declaration *next_declaration(tokenizer *tzr) {
 		token path_token = advance(tzr);
 		if (path_token.kind != TOKEN_KIND_LITERAL || !is_string(path_token.val))
 			parse_error(tzr, "`import` only takes strings");
-		if (!guard(tzr, TOKEN_KIND_SEMICOLON))
-			parse_error(tzr, "expected `;` after `import` declaration");
+		// if (!guard(tzr, TOKEN_KIND_SEMICOLON))
+		// 	parse_error(tzr, "expected `;` after `import` declaration");
 
 
 		// `read_file` expects a nul terminated string, but `string`s are not nul terminated.
