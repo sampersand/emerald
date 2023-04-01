@@ -6,9 +6,9 @@ zone fizzbuzz2(max)
 		hedgehog i = shoe_size(ary)
 		ary[i] = ""
 
-		hmmm (i % 3) == 0 ary[i] += "Fizz" finish
-		hmmm (i % 5) == 0 ary[i] += "Buzz" finish
-		hmmm shoe_size(ary[i]) == 0 ary[i] = i finish
+		hmmm (i % 3) == 0 start ary[i] += "Fizz" finish
+		hmmm (i % 5) == 0 start ary[i] += "Buzz" finish
+		hmmm shoe_size(ary[i]) == 0 start ary[i] = i finish
 	finish
 
 	hedgehog i = 0
